@@ -16,6 +16,7 @@ public class TCPServer {
 		try {
 			//1. 서버 소켓 생성
 			serverSocket = new ServerSocket();
+			
 			//2. 바인딩(binding)
 			InetAddress inetAddress = InetAddress.getLocalHost();
 			String localHostAddress = inetAddress.getHostAddress();

@@ -1,4 +1,4 @@
-package echo;
+package chat2;
 
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -9,11 +9,11 @@ import java.net.Socket;
 import java.util.ArrayList;
 import java.util.List;
 
-public class EchoServer {
-	private static final int SERVER_PORT = 6000;
-	
-	public static void main(String[] args) {
-		
+public class ChatServer {
+	private static final int SERVER_PORT = 9090;
+public static void main(String[] args) {
+
+		List<PrintWriter> listPrintWriters = new ArrayList<PrintWriter>();
 		ServerSocket serverSocket = null;
 		
 		try {
@@ -23,13 +23,14 @@ public class EchoServer {
 			//2. 바인딩( Binding )
 			InetAddress inetAddress = InetAddress.getLocalHost();
 			String localhostAddress = inetAddress.getHostAddress();
+			
 			serverSocket.bind( new InetSocketAddress( localhostAddress, SERVER_PORT ) );
 			consoleLog( "binding " + localhostAddress + ":" + SERVER_PORT );
 			
 			while( true ) {
 				//3. 연결 요청 기다림( accept )
 				Socket socket = serverSocket.accept();   // blocking
-				new EchoServerReceiveThread( socket ).start();
+				new ServerThread( socket, listPrintWriters ).start();
 			}
 			
 		} catch (IOException e) {
